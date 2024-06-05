@@ -19,11 +19,10 @@ const AdminQuizControlsContainer = styled.div`
   border-radius: var(--radius-sm);
   margin-top: var(--spacing-sm);
   @media (min-width: ${breakpoints.tablet}px) {
-    overflow-y: hidden;
     width: 95%;
     max-height: 800px;
     gap: var(--spacing-xl);
-    padding-bottom: var(--spacing-2xl);
+    padding-bottom: var(--spacing-4xl);
   }
 
   @media (min-width: ${breakpoints.desktop}px) {

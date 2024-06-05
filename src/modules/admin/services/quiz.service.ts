@@ -24,9 +24,7 @@ class QuizService {
   public async getAllQuizzes(): Promise<Quiz[]> {
     let result: Quiz[];
     try {
-      result = await client
-        .collection<Quiz[]>("quiz_v2")
-        .getFullList({ requestKey: null });
+      result = await client.collection<Quiz[]>("quiz_v2").getFullList();
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
