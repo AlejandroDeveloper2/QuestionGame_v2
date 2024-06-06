@@ -2,7 +2,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { initialMatchData } from "@game/constants";
+
 import { useQuizAdminStore } from "@admin/hooks";
+import { gameStore } from "@game/store";
 
 const useWaitGame = () => {
   const [isGameWaiting, setIsGameWaiting] = useState<boolean>(false);
@@ -17,6 +20,7 @@ const useWaitGame = () => {
     } else if (quiz && !quiz.isQuizStarted && quiz.isQuizFinished) {
       setIsGameWaiting(true);
       setIsGameFinished(true);
+      gameStore.setState({ game: null, currentMatch: initialMatchData });
       window.setTimeout(() => {
         setIsGameWaiting(false);
         resetQuiz(quiz.id);

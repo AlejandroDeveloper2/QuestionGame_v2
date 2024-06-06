@@ -6,7 +6,7 @@ import { gameData } from "@game/constants";
 
 import { QuizAdminStore } from "@admin/types/store-types";
 import { Quiz } from "@admin/types/data-types";
-import { ServerResponse } from "@core/types/data-types";
+import { Loading, ServerResponse } from "@core/types/data-types";
 
 import { QuizService } from "@admin/services";
 import { getRandomQuestions } from "@admin/utils";
@@ -25,7 +25,10 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
   setQuizzes: (quizzes): void => {
     set({ quizzes });
   },
-  createQuiz: async (newQuiz, toggleLoading): Promise<void> => {
+  createQuiz: async (
+    newQuiz,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({
       isLoading: true,
       message: "Creando quiz...",
@@ -65,7 +68,11 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
     }
   },
 
-  startQuiz: async (quizId, questionsBank, toggleLoading): Promise<void> => {
+  startQuiz: async (
+    quizId,
+    questionsBank,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({
       isLoading: true,
       message: "Iniciando quiz...",
@@ -103,7 +110,10 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
       });
     }
   },
-  finishQuiz: async (quizId, toggleLoading): Promise<void> => {
+  finishQuiz: async (
+    quizId,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({
       isLoading: true,
       message: "Finalizando quiz...",
@@ -155,7 +165,10 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
       toast.error(parsedError.message);
     }
   },
-  exitQuiz: async (quizId, toggleLoading): Promise<void> => {
+  exitQuiz: async (
+    quizId,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({
       isLoading: true,
       message: "Saliendo del quiz...",
@@ -180,7 +193,11 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
       });
     }
   },
-  restartQuiz: async (quizId, questionsBank, toggleLoading): Promise<void> => {
+  restartQuiz: async (
+    quizId,
+    questionsBank,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({
       isLoading: true,
       message: "Reiniciando quiz...",
@@ -219,7 +236,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
   setConsolationAward: async (
     quizId,
     consolationAward,
-    toggleLoading
+    toggleLoading: (loading: Loading) => void
   ): Promise<void> => {
     toggleLoading({
       isLoading: true,

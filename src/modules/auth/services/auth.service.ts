@@ -28,9 +28,7 @@ class AuthService {
   public async refreshUserAuth(): Promise<Auth> {
     let result: Auth;
     try {
-      result = await client
-        .collection<Auth>("users")
-        .authRefresh({ requestKey: null });
+      result = await client.collection<Auth>("users").authRefresh();
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -50,9 +48,7 @@ class AuthService {
   public async authenticatePlayer(playerInfo: StartFormData): Promise<Player> {
     let result: Player;
     try {
-      result = await client
-        .collection<Player>("players")
-        .create(playerInfo, { requestKey: null });
+      result = await client.collection<Player>("players").create(playerInfo);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -65,7 +61,7 @@ class AuthService {
 
   public async clearPlayer(playerId: string): Promise<void> {
     try {
-      await client.collection("players").delete(playerId, { requestKey: null });
+      await client.collection("players").delete(playerId);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(

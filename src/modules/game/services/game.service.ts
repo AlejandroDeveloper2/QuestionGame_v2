@@ -68,7 +68,7 @@ class GameService {
 
   public async deleteGame(gameId: string): Promise<void> {
     try {
-      await client.collection("game_v2").delete(gameId, { requestKey: null });
+      await client.collection("game_v2").delete(gameId);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(

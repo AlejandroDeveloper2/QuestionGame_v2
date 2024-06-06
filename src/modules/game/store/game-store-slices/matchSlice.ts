@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { GameSlice, MatchSlice } from "@game/types/store-types";
 import { Game, Match, MatchResultType } from "@game/types/data-types";
-import { ServerResponse } from "@core/types/data-types";
+import { Loading, ServerResponse } from "@core/types/data-types";
 import { Question } from "@admin/types/data-types";
 
 import { answerStyleData, initialMatchData } from "@game/constants";
@@ -34,7 +34,7 @@ const createMatchSlice: StateCreator<
     answerId,
     game: Game,
     selectedAnswer,
-    toggleLoading
+    toggleLoading: (loading: Loading) => void
   ): Promise<void> => {
     toggleLoading({ isLoading: true, message: "Seleccionando respuesta..." });
     try {
@@ -89,7 +89,11 @@ const createMatchSlice: StateCreator<
       toggleLoading({ isLoading: false, message: "" });
     }
   },
-  pauseMatch: async (gameId, game: Game, toggleLoading): Promise<void> => {
+  pauseMatch: async (
+    gameId,
+    game: Game,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({ isLoading: true, message: "Pausando ronda..." });
     try {
       const updatedMatches: Match[] = updateMatchesGameState(
@@ -114,7 +118,11 @@ const createMatchSlice: StateCreator<
       toggleLoading({ isLoading: false, message: "" });
     }
   },
-  startMatch: async (gameId, game: Game, toggleLoading): Promise<void> => {
+  startMatch: async (
+    gameId,
+    game: Game,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({ isLoading: true, message: "Iniciando ronda..." });
     try {
       const updatedMatches: Match[] = updateMatchesGameState(
@@ -140,7 +148,11 @@ const createMatchSlice: StateCreator<
       toggleLoading({ isLoading: false, message: "" });
     }
   },
-  restartMatch: async (gameId, game: Game, toggleLoading): Promise<void> => {
+  restartMatch: async (
+    gameId,
+    game: Game,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({ isLoading: true, message: "Reiniciando ronda..." });
     try {
       const timerValue: number = get().currentMatch.currentQuestion.time;
@@ -245,7 +257,7 @@ const createMatchSlice: StateCreator<
     game,
     questionBank,
     quizQuestions,
-    toggleLoading
+    toggleLoading: (loading: Loading) => void
   ): Promise<void> => {
     toggleLoading({
       isLoading: true,
@@ -283,7 +295,11 @@ const createMatchSlice: StateCreator<
       toggleLoading({ isLoading: false, message: "" });
     }
   },
-  exitMatch: async (gameId, game, toggleLoading): Promise<void> => {
+  exitMatch: async (
+    gameId,
+    game,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({ isLoading: true, message: "Finalizando ronda..." });
     try {
       const updatedMatches: Match[] = updateMatchesGameState(

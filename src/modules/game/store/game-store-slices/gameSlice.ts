@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 
 import { GameSlice, MatchSlice } from "@game/types/store-types";
 import { Game } from "@game/types/data-types";
-import { ServerResponse } from "@core/types/data-types";
+import { Loading, ServerResponse } from "@core/types/data-types";
 
 import { gameInitialValues, initialMatchData } from "@game/constants";
 
@@ -99,7 +99,11 @@ const createGameSlice: StateCreator<
     }
   },
 
-  nextMatch: async (gameId, game, toggleLoading): Promise<void> => {
+  nextMatch: async (
+    gameId,
+    game,
+    toggleLoading: (loading: Loading) => void
+  ): Promise<void> => {
     toggleLoading({ isLoading: true, message: "Continuando..." });
     try {
       const isDividedWildCardActive: boolean =

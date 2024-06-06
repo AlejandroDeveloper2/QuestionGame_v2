@@ -68,7 +68,7 @@ class QuizService {
 
   public async deleteQuiz(quizId: string): Promise<void> {
     try {
-      await client.collection("quiz_v2").delete(quizId, { requestKey: null });
+      await client.collection("quiz_v2").delete(quizId);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
