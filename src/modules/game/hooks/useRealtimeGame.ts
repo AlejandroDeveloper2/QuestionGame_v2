@@ -17,10 +17,6 @@ const useRealtimeGame = () => {
 
   useEffect(() => {
     const realtime = async () => {
-      await client
-        .collection("users")
-        .authWithPassword("quizgame4050@gmail.com", "quizgame2024");
-
       client.collection("game_v2").subscribe<Game>("*", function ({ record }) {
         const x = games.filter((game) => game.id !== record.id);
         setGames([record, ...x]);

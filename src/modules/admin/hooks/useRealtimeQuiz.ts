@@ -16,9 +16,6 @@ const useRealtimeQuiz = () => {
 
   useEffect(() => {
     const realtime = async () => {
-      await client
-        .collection("users")
-        .authWithPassword("quizgame4050@gmail.com", "quizgame2024");
       client.collection("quiz_v2").subscribe<Quiz>("*", function (e) {
         const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
         setQuizzes([e.record, ...x]);
