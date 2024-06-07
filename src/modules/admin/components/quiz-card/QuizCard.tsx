@@ -89,7 +89,7 @@ const QuizCard = ({ quiz }: QuizCardProps): JSX.Element => {
             <Badge
               id="expert-questions-amount-badge"
               Icon={EmojiSurprise}
-              value={quiz.mediumQuestions}
+              value={quiz.expertQuestions}
               size="normal"
               variant="danger"
             />
