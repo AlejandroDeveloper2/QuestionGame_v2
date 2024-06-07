@@ -11,11 +11,7 @@ class GameService {
     try {
       result = await client
         .collection<Game>("game_v2")
-        .create(gameData, {
-          requestKey: null,
-          mode: "no-cors",
-          headers: { "Access-Control-Allow-Origin": "*" },
-        });
+        .create(gameData, { requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -28,12 +24,7 @@ class GameService {
   public async getAllGames(): Promise<Game[]> {
     let result: Game[];
     try {
-      result = await client
-        .collection<Game[]>("game_v2")
-        .getFullList({
-          mode: "no-cors",
-          headers: { "Access-Control-Allow-Origin": "*" },
-        });
+      result = await client.collection<Game[]>("game_v2").getFullList();
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -50,8 +41,6 @@ class GameService {
         .collection<Game>("game_v2")
         .getFirstListItem(`quizId="${quizId}"`, {
           requestKey: null,
-          mode: "no-cors",
-          headers: { "Access-Control-Allow-Origin": "*" },
         });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
@@ -71,10 +60,7 @@ class GameService {
     try {
       result = await client
         .collection<Game>("game_v2")
-        .update(gameId, gamePartData, {
-          mode: "no-cors",
-          headers: { "Access-Control-Allow-Origin": "*" },
-        });
+        .update(gameId, gamePartData);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error((parsedError.message = errorMessage));
@@ -84,10 +70,7 @@ class GameService {
 
   public async deleteGame(gameId: string): Promise<void> {
     try {
-      await client.collection("game_v2").delete(gameId, {
-        mode: "no-cors",
-        headers: { "Access-Control-Allow-Origin": "*" },
-      });
+      await client.collection("game_v2").delete(gameId);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
