@@ -8,5 +8,5 @@ export const quizData: QuizFormData = {
   isQuizCompleted: false,
   easyQuestions: 5,
   mediumQuestions: 5,
-  expertQuestions: 5,
+  expertQuestions: 46,
 };
