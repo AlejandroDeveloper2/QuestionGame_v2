@@ -14,14 +14,19 @@ const useRealtimeGame = (): void => {
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    client.collection("game_v2").subscribe<Game>(
-      "*",
-      function ({ record }) {
+    const realtime = () => {
+      // await client
+      //   .collection("users")
+      //   .authWithPassword("test@example.com", "1234567890");
+      // client.authStore.loadFromCookie(document.cookie || "");
+
+      client.collection("game_v2").subscribe<Game>("*", function ({ record }) {
         const x = games.filter((game) => game.id !== record.id);
         setGames([record, ...x]);
-      },
-      { headers: { "Access-Control-Allow-Origin": "*" } }
-    );
+      });
+    };
+    realtime();
+
     return () => {
       client.realtime.unsubscribe();
     };

@@ -14,14 +14,17 @@ const useRealtimeQuiz = (): void => {
   const { quizzes, setQuizzes, getAllQuizzes, getQuiz } = useQuizAdminStore();
 
   useEffect(() => {
-    client.collection("quiz_v2").subscribe<Quiz>(
-      "*",
-      function (e) {
+    const realtime = () => {
+      // const user=await client
+      //   .collection("users")
+      //   .authWithPassword("quizgame4050@gmail.com", "1234567890").then((user)=>document.cookie=`token=${user.token}`);
+      // client.authStore.loadFromCookie(document.cookie || "");
+      client.collection("quiz_v2").subscribe<Quiz>("*", function (e) {
         const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
         setQuizzes([e.record, ...x]);
-      },
-      { headers: { "Access-Control-Allow-Origin": "*" } }
-    );
+      });
+    };
+    realtime();
     return () => {
       client.realtime.unsubscribe();
     };
