@@ -9,9 +9,11 @@ class QuizService {
   public async createQuiz(newQuiz: QuizFormData): Promise<Quiz> {
     let result: Quiz;
     try {
-      result = await client
-        .collection<Quiz>("quiz_v2")
-        .create(newQuiz, { requestKey: null });
+      result = await client.collection<Quiz>("quiz_v2").create(newQuiz, {
+        requestKey: null,
+        mode: "no-cors",
+        headers: { "Access-Control-Allow-Origin": "*" },
+      });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -24,7 +26,10 @@ class QuizService {
   public async getAllQuizzes(): Promise<Quiz[]> {
     let result: Quiz[];
     try {
-      result = await client.collection<Quiz[]>("quiz_v2").getFullList();
+      result = await client.collection<Quiz[]>("quiz_v2").getFullList({
+        mode: "no-cors",
+        headers: { "Access-Control-Allow-Origin": "*" },
+      });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -37,9 +42,11 @@ class QuizService {
   public async getQuiz(quizId: string): Promise<Quiz> {
     let result: Quiz;
     try {
-      result = await client
-        .collection<Quiz>("quiz_v2")
-        .getOne(quizId, { requestKey: null });
+      result = await client.collection<Quiz>("quiz_v2").getOne(quizId, {
+        requestKey: null,
+        mode: "no-cors",
+        headers: { "Access-Control-Allow-Origin": "*" },
+      });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -58,7 +65,10 @@ class QuizService {
     try {
       result = await client
         .collection<Quiz>("quiz_v2")
-        .update(quizId, updatedPartQuiz);
+        .update(quizId, updatedPartQuiz, {
+          mode: "no-cors",
+          headers: { "Access-Control-Allow-Origin": "*" },
+        });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error((parsedError.message = errorMessage));

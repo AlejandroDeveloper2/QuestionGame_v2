@@ -19,7 +19,7 @@ const useRealtimeQuiz = (): void => {
         const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
         setQuizzes([e.record, ...x]);
       },
-      { mode: "no-cors" }
+      { mode: "no-cors", headers: { "Access-Control-Allow-Origin": "*" } }
     );
     return () => {
       client.realtime.unsubscribe();

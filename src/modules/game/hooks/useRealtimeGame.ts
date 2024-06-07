@@ -19,7 +19,7 @@ const useRealtimeGame = (): void => {
         const x = games.filter((game) => game.id !== e.record.id);
         setGames([e.record, ...x]);
       },
-      { mode: "no-cors" }
+      { mode: "no-cors", headers: { "Access-Control-Allow-Origin": "*" } }
     );
     return () => {
       client.realtime.unsubscribe();
