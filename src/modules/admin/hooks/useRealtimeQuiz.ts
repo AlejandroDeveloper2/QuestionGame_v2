@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { client } from "@config/pocketbase";
 import { useQuizAdminStore } from "@admin/hooks";
+import { quizAdminStore } from "@admin/store";
 
 const useRealtimeQuiz = (): void => {
   const urlParams = useParams();
@@ -22,7 +23,14 @@ const useRealtimeQuiz = (): void => {
   });
 
   useEffect(() => {
-    getAllQuizzes();
+    getAllQuizzes().then(() => {
+      const currentQuiz = quizzes.filter(
+        (quiz) => quiz.id === urlParam.quizId
+      )[0];
+      quizAdminStore.setState({
+        quiz: currentQuiz,
+      });
+    });
   }, []);
 
   useEffect(() => {

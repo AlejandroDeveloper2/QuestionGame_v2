@@ -31,7 +31,7 @@ const QuizOptions = (): JSX.Element => {
     useLoading();
 
   const { questions } = useQuestionStore();
-  const { quiz, exitQuiz } = useQuizAdminStore();
+  const { quiz } = useQuizAdminStore();
   const {
     game,
     currentMatch,
@@ -112,10 +112,10 @@ const QuizOptions = (): JSX.Element => {
         variant="danger"
         loading={loadingExit}
         onClick={() => {
-          if (game && quiz)
-            exitMatch(game.id, game, toggleExitLoading).then(() => {
-              exitQuiz(quiz.id, toggleExitLoading);
-            });
+          if (game && quiz) exitMatch(game.id, game, toggleExitLoading);
+          // exitMatch(game.id, game, toggleExitLoading).then(() => {
+          //   exitQuiz(quiz.id, toggleExitLoading);
+          // });
         }}
       />
     </QuestionOptions>

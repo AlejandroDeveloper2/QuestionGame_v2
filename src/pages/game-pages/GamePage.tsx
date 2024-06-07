@@ -1,6 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { useEffect } from "react";
-
 import { dynamicModalRendered } from "@game/constants";
 
 import {
@@ -29,11 +26,7 @@ const GamePage = (): JSX.Element => {
   const player = usePlayerInfo();
 
   const { quiz } = useQuizAdminStore();
-  const { game, currentMatch, getGame } = useGameStore();
-
-  useEffect(() => {
-    if (quiz) getGame(quiz.id);
-  }, []);
+  const { game, currentMatch } = useGameStore();
 
   if ((quiz && player.id !== "") || game)
     return (

@@ -123,7 +123,7 @@ const createGameSlice: StateCreator<
               {
                 isMatchPaused: false,
                 isDividedWildCardActive: false,
-                isNewAttempt: false,
+                // isNewAttempt: false,
               }
             ),
             incorrectAnswers: 0,

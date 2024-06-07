@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 
 import { client } from "@config/pocketbase";
 import { useGameStore } from "@game/hooks";
+import { gameStore } from "@game/store";
 
 const useRealtimeGame = (): void => {
   const urlParams = useParams();
@@ -22,7 +23,15 @@ const useRealtimeGame = (): void => {
   });
 
   useEffect(() => {
-    getAllGames();
+    getAllGames().then(() => {
+      const currentGame = games.filter(
+        (game) => game.quizId === urlParam.quizId
+      )[0];
+      gameStore.setState({
+        game: currentGame,
+        currentMatch: currentGame?.matches[currentGame?.currentMatchIndex],
+      });
+    });
   }, []);
 
   useEffect(() => {
