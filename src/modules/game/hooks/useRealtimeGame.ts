@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { client } from "@config/pocketbase";
 import { useGameStore } from "@game/hooks";
 import { gameStore } from "@game/store";
+import { Game } from "@game/types/data-types";
 
 const useRealtimeGame = (): void => {
   const urlParams = useParams();
@@ -13,11 +14,11 @@ const useRealtimeGame = (): void => {
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    client.realtime.subscribe(
-      "game_v2",
-      function (e) {
-        const x = games.filter((game) => game.id !== e.record.id);
-        setGames([e.record, ...x]);
+    client.collection("game_v2").subscribe<Game>(
+      "*",
+      function ({ record }) {
+        const x = games.filter((game) => game.id !== record.id);
+        setGames([record, ...x]);
       },
       { headers: { "Access-Control-Allow-Origin": "*" } }
     );

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { client } from "@config/pocketbase";
 import { useQuizAdminStore } from "@admin/hooks";
 import { quizAdminStore } from "@admin/store";
+import { Quiz } from "@admin/types/data-types";
 
 const useRealtimeQuiz = (): void => {
   const urlParams = useParams();
@@ -13,8 +14,8 @@ const useRealtimeQuiz = (): void => {
   const { quizzes, setQuizzes, getAllQuizzes, getQuiz } = useQuizAdminStore();
 
   useEffect(() => {
-    client.realtime.subscribe(
-      "quiz_v2",
+    client.collection("quiz_v2").subscribe<Quiz>(
+      "*",
       function (e) {
         const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
         setQuizzes([e.record, ...x]);
