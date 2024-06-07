@@ -9,11 +9,7 @@ class QuizService {
   public async createQuiz(newQuiz: QuizFormData): Promise<Quiz> {
     let result: Quiz;
     try {
-      result = await client.collection<Quiz>("quiz_v2").create(newQuiz, {
-        requestKey: null,
-        mode: "no-cors",
-        headers: { "Access-Control-Allow-Origin": "*" },
-      });
+      result = await client.collection<Quiz>("quiz_v2").create(newQuiz);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
