@@ -2,23 +2,24 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { client } from "@config/pocketbase";
-import { useGameStore } from "@game/hooks";
-import { gameStore } from "@game/store";
 import { Game } from "@game/types/data-types";
 
-const useRealtimeGame = (): void => {
+import { useGameStore } from "@game/hooks";
+import { gameStore } from "@game/store";
+
+import { client } from "@config/pocketbase";
+
+const useRealtimeGame = () => {
   const urlParams = useParams();
   const urlParam = urlParams as { quizId: string };
 
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    const realtime = () => {
-      // await client
-      //   .collection("users")
-      //   .authWithPassword("test@example.com", "1234567890");
-      // client.authStore.loadFromCookie(document.cookie || "");
+    const realtime = async () => {
+      await client
+        .collection("users")
+        .authWithPassword("quizgame4050@gmail.com", "quizgame2024");
 
       client.collection("game_v2").subscribe<Game>("*", function ({ record }) {
         const x = games.filter((game) => game.id !== record.id);
