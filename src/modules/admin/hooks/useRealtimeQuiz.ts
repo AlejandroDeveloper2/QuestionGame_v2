@@ -13,10 +13,14 @@ const useRealtimeQuiz = (): void => {
   const { quizzes, setQuizzes, getAllQuizzes, getQuiz } = useQuizAdminStore();
 
   useEffect(() => {
-    client.realtime.subscribe("quiz_v2", function (e) {
-      const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
-      setQuizzes([e.record, ...x]);
-    });
+    client.realtime.subscribe(
+      "quiz_v2",
+      function (e) {
+        const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
+        setQuizzes([e.record, ...x]);
+      },
+      { headers: { "Access-Control-Allow-Origin": "*" } }
+    );
     return () => {
       client.realtime.unsubscribe();
     };

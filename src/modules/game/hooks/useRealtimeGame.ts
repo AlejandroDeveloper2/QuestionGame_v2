@@ -13,10 +13,14 @@ const useRealtimeGame = (): void => {
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    client.realtime.subscribe("game_v2", function (e) {
-      const x = games.filter((game) => game.id !== e.record.id);
-      setGames([e.record, ...x]);
-    });
+    client.realtime.subscribe(
+      "game_v2",
+      function (e) {
+        const x = games.filter((game) => game.id !== e.record.id);
+        setGames([e.record, ...x]);
+      },
+      { headers: { "Access-Control-Allow-Origin": "*" } }
+    );
     return () => {
       client.realtime.unsubscribe();
     };
