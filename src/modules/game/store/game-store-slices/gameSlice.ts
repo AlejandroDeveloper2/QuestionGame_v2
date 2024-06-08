@@ -13,7 +13,6 @@ import {
   getUpdatedGamesState,
   increaseMatchIndex,
   updateMatchesGameState,
-  // updateMatchesGameState,
 } from "@game/helpers";
 
 const gameService = new GameService();
@@ -36,7 +35,11 @@ const createGameSlice: StateCreator<
         quizId,
         matches: createMatches(quizQuestions),
       });
-      set(({ games }) => ({ games: [...games, newGame], game: newGame }));
+      set(({ games }) => ({
+        games: [...games, newGame],
+        game: newGame,
+        currentMatch: newGame.matches[newGame.currentMatchIndex],
+      }));
       toast.success("¡Juego creado!");
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
