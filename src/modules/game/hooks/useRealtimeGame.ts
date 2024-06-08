@@ -2,8 +2,6 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { Game } from "@game/types/data-types";
-
 import { useGameStore } from "@game/hooks";
 import { gameStore } from "@game/store";
 
@@ -16,16 +14,13 @@ const useRealtimeGame = () => {
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    const realtime = async () => {
-      client.collection("game_v2").subscribe<Game>("*", function ({ record }) {
-        const x = games.filter((game) => game.id !== record.id);
-        setGames([record, ...x]);
-      });
-    };
-    realtime();
+    client.realtime.subscribe("game_v2", function ({ record }) {
+      const x = games.filter((game) => game.id !== record.id);
+      setGames([record, ...x]);
+    });
 
     return () => {
-      client.realtime.unsubscribe();
+      client.realtime.unsubscribe("game_v2");
     };
   });
 

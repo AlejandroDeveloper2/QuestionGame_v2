@@ -170,7 +170,9 @@ export const getAnswerResultMessage = (
   currentMatch: Match
 ): string => {
   const message: string =
-    currentMatch?.matchResult === "Correcta" && game?.incorrectAnswers === 0
+    currentMatch?.matchResult === "Correcta" &&
+    game &&
+    game.incorrectAnswers === 0
       ? `+ $${currentMatch?.currentQuestion?.reward}`
       : game &&
         game.incorrectAnswers > 0 &&

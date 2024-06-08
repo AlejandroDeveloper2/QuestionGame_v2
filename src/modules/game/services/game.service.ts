@@ -24,7 +24,9 @@ class GameService {
   public async getAllGames(): Promise<Game[]> {
     let result: Game[];
     try {
-      result = await client.collection<Game[]>("game_v2").getFullList();
+      result = await client
+        .collection<Game[]>("game_v2")
+        .getFullList({ requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
