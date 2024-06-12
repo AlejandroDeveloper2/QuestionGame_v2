@@ -14,12 +14,24 @@ const useRealtimeQuiz = () => {
   const { quizzes, setQuizzes, getAllQuizzes, getQuiz } = useQuizAdminStore();
 
   useEffect(() => {
-    client.collection("quiz_v2").subscribe<Quiz>(urlParam.quizId, function (e) {
-      const x = quizzes.filter((quiz) => quiz.id !== e.record.id);
-      setQuizzes([e.record, ...x]);
+    client.collection("quiz_v2").subscribe<Quiz>("*", function (e) {
+      if (e.action === "delete") {
+        setQuizzes(quizzes.filter((quiz) => quiz.id !== e.record.id));
+        return;
+      }
+      if (e.action === "update") {
+        setQuizzes(
+          quizzes.map((quiz) => {
+            if (quiz.id === e.record.id) return e.record;
+            return quiz;
+          })
+        );
+        return;
+      }
+      setQuizzes([e.record, ...quizzes]);
     });
     return () => {
-      client.collection("quiz_v2").unsubscribe(urlParam.quizId);
+      client.collection("quiz_v2").unsubscribe();
     };
   });
 

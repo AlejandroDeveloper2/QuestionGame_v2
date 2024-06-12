@@ -15,13 +15,25 @@ const useRealtimeGame = () => {
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    client.collection("game_v2").subscribe<Game>("*", function ({ record }) {
-      const x = games.filter((game) => game.id !== record.id);
-      setGames([record, ...x]);
+    client.collection("game_v2").subscribe<Game>("*", function (e) {
+      if (e.action === "delete") {
+        setGames(games.filter((game) => game.id !== e.record.id));
+        return;
+      }
+      if (e.action === "update") {
+        setGames(
+          games.map((game) => {
+            if (game.id === e.record.id) return e.record;
+            return game;
+          })
+        );
+        return;
+      }
+      setGames([e.record, ...games]);
     });
 
     return () => {
-      client.collection("game_v2").unsubscribe("*");
+      client.collection("game_v2").unsubscribe();
     };
   });
 

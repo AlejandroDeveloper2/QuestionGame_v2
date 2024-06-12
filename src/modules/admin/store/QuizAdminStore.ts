@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { toast } from "react-toastify";
 
 import { quizData } from "@admin/constants";
-import { gameData } from "@game/constants";
+import { gameData, initialMatchData } from "@game/constants";
 
 import { QuizAdminStore } from "@admin/types/store-types";
 import { Quiz } from "@admin/types/data-types";
@@ -98,6 +98,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
 
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
+        quiz: updatedQuiz,
       }));
       toast.success("¡Quiz iniciado con exito!");
     } catch (_e: unknown) {
@@ -133,8 +134,10 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
         },
         "¡Ha ocurrido un error al finalizar el quiz!"
       );
+      gameStore.setState({ game: null, currentMatch: initialMatchData });
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
+        quiz: updatedQuiz,
       }));
       toast.success("¡Quiz finalizado con exito!");
     } catch (_e: unknown) {
@@ -159,6 +162,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
 
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
+        quiz: updatedQuiz,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -181,6 +185,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
       );
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
+        quiz: updatedQuiz,
       }));
       toast.success("¡Te has retirado con exito!");
     } catch (_e: unknown) {
@@ -221,6 +226,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
 
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
+        quiz: updatedQuiz,
       }));
       toast.success("¡Quiz reiniciado!");
     } catch (_e: unknown) {
@@ -250,6 +256,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
       );
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
+        quiz: updatedQuiz,
       }));
       toast.success("¡Premio concedido!");
     } catch (_e: unknown) {

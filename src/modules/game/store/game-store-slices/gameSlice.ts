@@ -5,7 +5,7 @@ import { GameSlice, MatchSlice } from "@game/types/store-types";
 import { Game } from "@game/types/data-types";
 import { Loading, ServerResponse } from "@core/types/data-types";
 
-import { gameInitialValues, initialMatchData } from "@game/constants";
+import { gameInitialValues } from "@game/constants";
 
 import { createMatches } from "@game/utils";
 import { GameService } from "@game/services";
@@ -60,7 +60,6 @@ const createGameSlice: StateCreator<
       const game: Game = await gameService.getGame(quizId);
       set({ game, currentMatch: game.matches[game.currentMatchIndex] });
     } catch (_e: unknown) {
-      set({ game: null, currentMatch: initialMatchData });
       const parsedError = _e as ServerResponse;
       toast.error(parsedError.message);
     }
@@ -80,8 +79,8 @@ const createGameSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
-      console.log(get().games.length);
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
       toast.error(parsedError.message);
@@ -96,6 +95,7 @@ const createGameSlice: StateCreator<
       );
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -137,6 +137,7 @@ const createGameSlice: StateCreator<
         set(({ games }) => ({
           games: getUpdatedGamesState(games, updatedGame),
           currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+          game: updatedGame,
         }));
       }
     } catch (_e: unknown) {

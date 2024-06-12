@@ -79,6 +79,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, newGame),
         currentMatch: newGame.matches[newGame.currentMatchIndex],
+        game: newGame,
       }));
 
       if (selectedAnswer) toast.success("¡Opción seleccionada!");
@@ -110,6 +111,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -140,6 +142,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -179,6 +182,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -214,6 +218,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -246,6 +251,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -287,6 +293,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -317,6 +324,7 @@ const createMatchSlice: StateCreator<
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+        game: updatedGame,
       }));
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
