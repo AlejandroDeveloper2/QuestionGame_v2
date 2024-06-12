@@ -2,6 +2,8 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import { Game } from "@game/types/data-types";
+
 import { useGameStore } from "@game/hooks";
 
 import { client } from "@config/pocketbase";
@@ -13,13 +15,13 @@ const useRealtimeGame = () => {
   const { games, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
-    client.realtime.subscribe("game_v2", function ({ record }) {
+    client.collection("game_v2").subscribe<Game>("*", function ({ record }) {
       const x = games.filter((game) => game.id !== record.id);
       setGames([record, ...x]);
     });
 
     return () => {
-      client.realtime.unsubscribe("game_v2");
+      client.collection("game_v2").unsubscribe("*");
     };
   });
 
@@ -28,7 +30,8 @@ const useRealtimeGame = () => {
   }, []);
 
   useEffect(() => {
-    getGame(urlParam.quizId);
+    if (games.some((game) => game.quizId === urlParam.quizId))
+      getGame(urlParam.quizId);
   }, [games]);
 };
 

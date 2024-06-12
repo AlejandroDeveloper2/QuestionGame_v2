@@ -62,7 +62,7 @@ const createGameSlice: StateCreator<
     } catch (_e: unknown) {
       set({ game: null, currentMatch: initialMatchData });
       const parsedError = _e as ServerResponse;
-      console.log(parsedError);
+      toast.error(parsedError.message);
     }
   },
   resetGame: async (gameId, quizId, quizQuestions): Promise<void> => {
@@ -81,6 +81,7 @@ const createGameSlice: StateCreator<
         games: getUpdatedGamesState(games, updatedGame),
         currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
       }));
+      console.log(get().games.length);
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
       toast.error(parsedError.message);
