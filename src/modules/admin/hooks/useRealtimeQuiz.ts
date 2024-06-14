@@ -11,7 +11,8 @@ const useRealtimeQuiz = () => {
   const urlParams = useParams();
   const urlParam = urlParams as { quizId: string };
 
-  const { quizzes, setQuizzes, getAllQuizzes, getQuiz } = useQuizAdminStore();
+  const { quizzes, quiz, setQuizzes, getAllQuizzes, getQuiz } =
+    useQuizAdminStore();
 
   useEffect(() => {
     client.collection("quiz_v2").subscribe<Quiz>("*", function (e) {
@@ -26,6 +27,7 @@ const useRealtimeQuiz = () => {
             return quiz;
           })
         );
+
         return;
       }
       setQuizzes([e.record, ...quizzes]);
@@ -37,7 +39,7 @@ const useRealtimeQuiz = () => {
 
   useEffect(() => {
     getAllQuizzes();
-  }, []);
+  }, [quiz]);
 
   useEffect(() => {
     getQuiz(urlParam.quizId);

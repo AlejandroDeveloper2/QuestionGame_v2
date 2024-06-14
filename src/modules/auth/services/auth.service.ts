@@ -80,7 +80,7 @@ class AuthService {
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
-        (parsedError.message = "¡Ha ocurrido un error al guardar el jugador!")
+        (parsedError.message = "¡Ha ocurrido un error al obtener el jugador!")
       );
     }
     return result;

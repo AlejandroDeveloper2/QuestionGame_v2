@@ -24,7 +24,9 @@ class GameService {
   public async getAllGames(): Promise<Game[]> {
     let result: Game[];
     try {
-      result = await client.collection<Game[]>("game_v2").getFullList();
+      result = await client
+        .collection<Game[]>("game_v2")
+        .getFullList({ requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -39,9 +41,7 @@ class GameService {
     try {
       result = await client
         .collection<Game>("game_v2")
-        .getFirstListItem(`quizId="${quizId}"`, {
-          requestKey: null,
-        });
+        .getFirstListItem(`quizId="${quizId}"`, { requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -60,7 +60,7 @@ class GameService {
     try {
       result = await client
         .collection<Game>("game_v2")
-        .update(gameId, gamePartData);
+        .update(gameId, gamePartData, { requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error((parsedError.message = errorMessage));

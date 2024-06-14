@@ -5,16 +5,18 @@ import { useParams } from "react-router-dom";
 import { Player } from "@auth/types/data-types";
 
 import { useAuthStore } from "@auth/hooks";
+import { useQuizAdminStore } from "@admin/hooks";
 
 const usePlayerInfo = (): Player => {
   const urlParams = useParams();
   const urlParam = urlParams as { quizId: string };
 
+  const { quiz } = useQuizAdminStore();
   const { player, getPlayer } = useAuthStore();
 
   useEffect(() => {
-    getPlayer(urlParam.quizId);
-  }, []);
+    if (!quiz?.isQuizFinished) getPlayer(urlParam.quizId);
+  }, [quiz?.isQuizFinished]);
 
   return player;
 };

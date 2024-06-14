@@ -9,19 +9,17 @@ class QuizService {
   public async createQuiz(newQuiz: QuizFormData): Promise<Quiz> {
     let result: Quiz;
     try {
-      result = await client
-        .collection<Quiz>("quiz_v2")
-        .create(
-          {
-            ...newQuiz,
-            questions: [],
-            consolationAward: "",
-            isQuizStarted: false,
-            isQuizFinished: false,
-            isQuizCompleted: false,
-          },
-          { requestKey: null }
-        );
+      result = await client.collection<Quiz>("quiz_v2").create(
+        {
+          ...newQuiz,
+          questions: [],
+          consolationAward: "",
+          isQuizStarted: false,
+          isQuizFinished: false,
+          isQuizCompleted: false,
+        },
+        { requestKey: null }
+      );
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -34,7 +32,9 @@ class QuizService {
   public async getAllQuizzes(): Promise<Quiz[]> {
     let result: Quiz[];
     try {
-      result = await client.collection<Quiz[]>("quiz_v2").getFullList();
+      result = await client
+        .collection<Quiz[]>("quiz_v2")
+        .getFullList({ requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(
@@ -68,7 +68,7 @@ class QuizService {
     try {
       result = await client
         .collection<Quiz>("quiz_v2")
-        .update(quizId, updatedPartQuiz);
+        .update(quizId, updatedPartQuiz, { requestKey: null });
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error((parsedError.message = errorMessage));

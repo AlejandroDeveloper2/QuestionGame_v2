@@ -12,7 +12,7 @@ const useRealtimeGame = () => {
   const urlParams = useParams();
   const urlParam = urlParams as { quizId: string };
 
-  const { games, setGames, getAllGames, getGame } = useGameStore();
+  const { games, game, setGames, getAllGames, getGame } = useGameStore();
 
   useEffect(() => {
     client.collection("game_v2").subscribe<Game>("*", function (e) {
@@ -39,11 +39,10 @@ const useRealtimeGame = () => {
 
   useEffect(() => {
     getAllGames();
-  }, []);
+  }, [game]);
 
   useEffect(() => {
-    if (games.some((game) => game.quizId === urlParam.quizId))
-      getGame(urlParam.quizId);
+    getGame(urlParam.quizId);
   }, [games]);
 };
 
