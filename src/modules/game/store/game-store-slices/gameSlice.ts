@@ -60,6 +60,14 @@ const createGameSlice: StateCreator<
         { matches: createMatches(quizQuestions) },
         "¡Ha ocurrido un error al iniciar el juego!"
       );
+      window.localStorage.setItem(
+        "initializedGame",
+        JSON.stringify({
+          ...gameInitialValues,
+          id: updatedGame.id,
+          quizId: updatedGame.quizId,
+        })
+      );
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         game: updatedGame,
