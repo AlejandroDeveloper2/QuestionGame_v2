@@ -5,11 +5,11 @@ interface GameSlice {
   games: Game[];
   game: Game | null;
   setGames: (games: Game[]) => void;
-  createGame: (
-    gameData: GameFormData,
-    quizId: string,
-    quizQuestions: Question[]
+  initializeGame: (
+    initialGameData: GameFormData,
+    quizId: string
   ) => Promise<void>;
+  startGame: (gameId: string, quizQuestions: Question[]) => Promise<void>;
   getAllGames: () => Promise<void>;
   getGame: (quizId: string) => Promise<void>;
   resetGame: (
@@ -28,6 +28,7 @@ interface GameSlice {
     game: Game,
     toggleLoading: (loadingStatus: Loading) => void
   ) => Promise<void>;
+  clearGame: (gameId: string, quizId: string) => Promise<void>;
   deleteGame: (gameId: string) => Promise<void>;
 }
 

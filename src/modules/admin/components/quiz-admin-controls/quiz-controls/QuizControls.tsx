@@ -39,7 +39,7 @@ const QuizControls = (): JSX.Element => {
 
   const { questions } = useQuestionStore();
   const { quiz, finishQuiz, restartQuiz } = useQuizAdminStore();
-  const { game, currentMatch, deleteGame, resetGame } = useGameStore();
+  const { game, currentMatch, clearGame, resetGame } = useGameStore();
 
   const [Icon, value] = getStatusQuizBadge(quiz ? quiz.isQuizCompleted : false);
 
@@ -79,7 +79,9 @@ const QuizControls = (): JSX.Element => {
             onClick={() => {
               if (quiz && game)
                 finishQuiz(quiz.id, toggleLoading).then(() => {
-                  deleteGame(game.id).then(() => navigate("/admin/quiz"));
+                  clearGame(game.id, quiz.id).then(() =>
+                    navigate("/admin/quiz")
+                  );
                 });
             }}
           />

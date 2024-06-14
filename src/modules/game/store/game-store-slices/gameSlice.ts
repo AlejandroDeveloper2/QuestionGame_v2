@@ -2,10 +2,10 @@ import { StateCreator } from "zustand";
 import { toast } from "react-toastify";
 
 import { GameSlice, MatchSlice } from "@game/types/store-types";
-import { Game } from "@game/types/data-types";
+import { Game, GameFormData } from "@game/types/data-types";
 import { Loading, ServerResponse } from "@core/types/data-types";
 
-import { gameInitialValues } from "@game/constants";
+import { gameData, gameInitialValues, initialMatchData } from "@game/constants";
 
 import { createMatches } from "@game/utils";
 import { GameService } from "@game/services";
@@ -28,19 +28,37 @@ const createGameSlice: StateCreator<
   setGames: (games): void => {
     set({ games });
   },
-  createGame: async (gameData, quizId, quizQuestions): Promise<void> => {
+  initializeGame: async (
+    initialGameData: GameFormData,
+    quizId: string
+  ): Promise<void> => {
     try {
       const newGame: Game = await gameService.createGame({
-        ...gameData,
+        ...initialGameData,
         quizId,
-        matches: createMatches(quizQuestions),
       });
       set(({ games }) => ({
         games: [...games, newGame],
         game: newGame,
-        currentMatch: newGame.matches[newGame.currentMatchIndex],
       }));
-      toast.success("¡Juego creado!");
+    } catch (_e: unknown) {
+      const parsedError = _e as ServerResponse;
+      toast.error(parsedError.message);
+    }
+  },
+  startGame: async (gameId, quizQuestions): Promise<void> => {
+    try {
+      const updatedGame: Game = await gameService.updateGameStatus(
+        gameId,
+        { matches: createMatches(quizQuestions) },
+        "¡Ha ocurrido un error al iniciar el juego!"
+      );
+      set(({ games }) => ({
+        games: getUpdatedGamesState(games, updatedGame),
+        game: updatedGame,
+        currentMatch: updatedGame.matches[updatedGame.currentMatchIndex],
+      }));
+      toast.success("¡Juego iniciado!");
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
       toast.error(parsedError.message);
@@ -145,6 +163,24 @@ const createGameSlice: StateCreator<
       toast.error(parsedError.message);
     } finally {
       toggleLoading({ isLoading: false, message: "" });
+    }
+  },
+
+  clearGame: async (gameId, quizId): Promise<void> => {
+    try {
+      const updatedGame = await gameService.updateGameStatus(
+        gameId,
+        { ...gameData, quizId },
+        "Ha ocurrido un error al limpiar el juego!"
+      );
+      set(({ games }) => ({
+        games: getUpdatedGamesState(games, updatedGame),
+        currentMatch: initialMatchData,
+        game: updatedGame,
+      }));
+    } catch (_e: unknown) {
+      const parsedError = _e as ServerResponse;
+      toast.error(parsedError.message);
     }
   },
 

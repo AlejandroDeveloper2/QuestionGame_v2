@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { toast } from "react-toastify";
 
 import { preConfiguredQuizData } from "@admin/constants";
-import { gameData, initialMatchData } from "@game/constants";
+import { gameData } from "@game/constants";
 
 import { QuizAdminStore } from "@admin/types/store-types";
 import { Quiz } from "@admin/types/data-types";
@@ -36,6 +36,8 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
     });
     try {
       const quiz: Quiz = await quizService.createQuiz(newQuiz);
+      await gameStore.getState().initializeGame(gameData, quiz.id);
+
       set(({ quizzes }) => ({ quizzes: [...quizzes, quiz] }));
       toast.success("¡Quiz creado con exito!");
     } catch (_e: unknown) {
@@ -93,9 +95,10 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
         "¡Ha ocurrido un error al iniciar el quiz!"
       );
 
-      await gameStore
-        .getState()
-        .createGame(gameData, quizId, updatedQuiz.questions);
+      const gameId = gameStore.getState().game?.id;
+
+      if (gameId)
+        await gameStore.getState().startGame(gameId, updatedQuiz.questions);
 
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
@@ -135,7 +138,6 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
         },
         "¡Ha ocurrido un error al finalizar el quiz!"
       );
-      gameStore.setState({ game: null, currentMatch: initialMatchData });
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),
         quiz: updatedQuiz,

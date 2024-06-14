@@ -45,7 +45,7 @@ const GamePage = (): JSX.Element => {
             direction="column"
           />
         </LoadingWindow>
-        {quiz && game ? (
+        {quiz && game && game.matches.length > 0 ? (
           <>
             <Header
               style={{
