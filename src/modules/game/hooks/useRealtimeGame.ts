@@ -48,6 +48,7 @@ const useRealtimeGame = () => {
 
   useEffect(() => {
     getGame(urlParam.quizId);
+    window.localStorage.setItem("initializedGame", JSON.stringify(game));
   }, [games]);
 };
 

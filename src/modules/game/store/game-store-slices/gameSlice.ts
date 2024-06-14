@@ -84,7 +84,6 @@ const createGameSlice: StateCreator<
   getGame: async (quizId): Promise<void> => {
     try {
       const game: Game = await gameService.getGame(quizId);
-      // window.localStorage.setItem("initializedGame", JSON.stringify(game));
       set({ game, currentMatch: game.matches[game.currentMatchIndex] });
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
