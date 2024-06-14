@@ -92,15 +92,39 @@ export class Validations {
     }
   }
 
-  public validateOptionsLength<T, A>(
+  public validateEmptyList<T, A>(
     options: A[],
     key: keyof T,
     formRef: React.RefObject<HTMLFormElement>
   ): Promise<FieldErrorType> {
     let error: FieldErrorType;
-    if (options.length === 0 || options.length < 4) {
+    if (options.length === 0) {
       error = {
-        message: "Añade solo 4 opciones!",
+        message: "Selecciona por lo menos una opción",
+        error: true,
+      };
+      markWrongInput<T>(formRef, key, true);
+      return Promise.reject(error);
+    } else {
+      error = {
+        message: "",
+        error: false,
+      };
+      markWrongInput<T>(formRef, key, false);
+      return Promise.resolve(error);
+    }
+  }
+
+  public validateOptionsLength<T, A>(
+    options: A[],
+    key: keyof T,
+    limit: number = 4,
+    formRef: React.RefObject<HTMLFormElement>
+  ): Promise<FieldErrorType> {
+    let error: FieldErrorType;
+    if (options.length === 0 || options.length < limit) {
+      error = {
+        message: `Añade solo ${limit} opciones!`,
         error: true,
       };
       markWrongInput<T>(formRef, key, true);

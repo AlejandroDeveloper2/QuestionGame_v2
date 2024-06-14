@@ -7,5 +7,9 @@ export {
   initialCategoryValues,
   initialCategoryErrors,
 } from "./category-form-values";
-export { quizData } from "./quiz-body";
+export {
+  preConfiguredQuizData,
+  initialQuizValues,
+  initialQuizErrors,
+} from "./quiz-form-values";
 export { initialAwardValues, initialAwardErrors } from "./award-form-values";

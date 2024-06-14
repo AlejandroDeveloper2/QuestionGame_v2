@@ -17,3 +17,4 @@ export { default as QuizAnswersControls } from "./quiz-admin-controls/quiz-answe
 export { default as QuizCard } from "./quiz-card/QuizCard";
 export { default as QuizList } from "./quiz-list/QuizList";
 export { default as ConsolationAwardForm } from "./consolation-award-form/ConsolationAwardForm";
+export { default as QuizForm } from "./quiz-form/QuizForm";

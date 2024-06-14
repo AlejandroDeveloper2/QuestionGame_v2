@@ -12,7 +12,7 @@ const InputContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  label {
+  label[id="input-label"] {
     font-size: var(--font-size-md);
     font-family: var(--primary-font-family);
     font-weight: bold;
@@ -33,7 +33,7 @@ const InputContainer = styled.div`
   }
 
   @media (min-width: ${breakpoints.tablet}px) {
-    label {
+    label[id="input-label"] {
       font-size: var(--font-size-xl);
     }
     svg[id="paste-text-button"] {
@@ -54,6 +54,7 @@ const InputBody = styled.kbd`
   background-color: var(--white);
   border: solid 4px var(--primary-color-base);
   cursor: pointer;
+  position: relative;
   transition: border 0.5s ease;
 
   div[id="spinner"] {
@@ -79,7 +80,7 @@ const InputBody = styled.kbd`
       transform: rotate(15deg);
     }
     svg[id="select-arrow"] {
-      transform: rotate(90deg);
+      transform: rotate(-90deg);
     }
   }
 

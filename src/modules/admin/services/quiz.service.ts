@@ -11,7 +11,17 @@ class QuizService {
     try {
       result = await client
         .collection<Quiz>("quiz_v2")
-        .create(newQuiz, { requestKey: null });
+        .create(
+          {
+            ...newQuiz,
+            questions: [],
+            consolationAward: "",
+            isQuizStarted: false,
+            isQuizFinished: false,
+            isQuizCompleted: false,
+          },
+          { requestKey: null }
+        );
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(

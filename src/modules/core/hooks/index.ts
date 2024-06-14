@@ -8,3 +8,4 @@ export { default as useLoading } from "./useLoading";
 export { default as useSearch } from "./useSearch";
 export { default as useScreenSize } from "./useScreenSize";
 export { default as useDialog } from "./useDialog";
+export { default as useMultiselect } from "./useMultiselect";

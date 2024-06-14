@@ -16,6 +16,8 @@ interface AnswerFormProps {
   toggleForm: () => void;
 }
 
+interface QuizFormProps extends QuestionFormProps {}
+
 interface HomeHeaderProps {
   searchValue: string;
   handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -65,6 +67,7 @@ export type {
   QuestionFormProps,
   CategoryFormProps,
   AnswerFormProps,
+  QuizFormProps,
   HomeHeaderProps,
   CategoryHeaderProps,
   QuestionListProps,

@@ -7,6 +7,7 @@ import {
   ButtonWithIcon,
   ListInputControl,
   MultiOptionInput,
+  MultiSelect,
 } from "@core/components";
 
 import { FormBody } from "./Form.style";
@@ -25,5 +26,6 @@ Form.Select = Select;
 Form.Button = ButtonWithIcon;
 Form.ListInputControl = ListInputControl;
 Form.MultiOptionInput = MultiOptionInput;
+Form.MultiSelect = MultiSelect;
 
 export default Form;

@@ -23,6 +23,7 @@ export const validationSchema = async (
     .validateOptionsLength<QuestionFormData, Answer>(
       formData.answers,
       "answers",
+      4,
       formRef
     )
     .then(() =>

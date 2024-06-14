@@ -13,7 +13,9 @@ const BaseInput = ({
 }: BaseInputProps): JSX.Element => {
   return (
     <InputContainer id="input-container">
-      <label htmlFor={name}>{label}</label>
+      <label htmlFor={name} id="input-label">
+        {label}
+      </label>
       <InputBody id={name}>
         <Icon id="input-icon" />
         {children}

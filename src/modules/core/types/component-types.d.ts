@@ -85,6 +85,13 @@ interface SelectProps<T> extends Omit<BaseInputProps, "children"> {
   onLoadData: () => void;
 }
 
+interface MultiSelectProps<T>
+  extends Omit<SelectProps<T>, "onChange" | "value"> {
+  values: T[];
+  addOption: (option: T) => void;
+  removeOption: (optionIndex: number) => void;
+}
+
 interface ListInputControlProps<T> {
   label: string;
   options: T[];
@@ -199,6 +206,7 @@ export type {
   BaseInputProps,
   InputTextProps,
   SelectProps,
+  MultiSelectProps,
   ListInputControlProps,
   ElementListProps,
   MultiOptionInputProps,

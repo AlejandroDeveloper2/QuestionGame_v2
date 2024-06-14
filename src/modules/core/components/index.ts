@@ -7,6 +7,7 @@ export { default as Logo } from "./logo/Logo";
 export { default as BaseInput } from "./input/base-input/BaseInput";
 export { default as InputText } from "./input/input-text/InputText";
 export { default as Select } from "./input/select/Select";
+export { default as MultiSelect } from "./input/multi-select/MultiSelect";
 export { default as ListInputControl } from "./input/list-input-control/ListInputControl";
 export { default as MultiOptionInput } from "./input/multi-option-input/MultiOptionInput";
 export { default as ErrorMessage } from "./error-message/ErrorMessage";

@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "react-toastify";
 
-import { quizData } from "@admin/constants";
+import { preConfiguredQuizData } from "@admin/constants";
 import { gameData, initialMatchData } from "@game/constants";
 
 import { QuizAdminStore } from "@admin/types/store-types";
@@ -17,7 +17,8 @@ import { authStore } from "@auth/store";
 
 const quizService = new QuizService();
 
-const { easyQuestions, mediumQuestions, expertQuestions } = quizData;
+const { easyQuestions, mediumQuestions, expertQuestions } =
+  preConfiguredQuizData;
 
 const quizAdminStore = create<QuizAdminStore>((set) => ({
   quizzes: [],

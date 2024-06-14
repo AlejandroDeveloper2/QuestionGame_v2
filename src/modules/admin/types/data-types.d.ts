@@ -27,11 +27,8 @@ interface Category extends CategoryFormData {
 }
 
 interface QuizFormData {
-  questions: Question[];
-  consolationAward: string;
-  isQuizStarted: boolean;
-  isQuizFinished: boolean;
-  isQuizCompleted: boolean;
+  name: string;
+  categories: Category[];
   easyQuestions: number;
   mediumQuestions: number;
   expertQuestions: number;
@@ -39,6 +36,11 @@ interface QuizFormData {
 
 interface Quiz extends QuizFormData {
   id: string;
+  questions: Question[];
+  consolationAward: string;
+  isQuizStarted: boolean;
+  isQuizFinished: boolean;
+  isQuizCompleted: boolean;
 }
 
 interface ConsolationAwardFormData {
