@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { Question } from "@admin/types/data-types";
 
 import { useLoading, useSearch } from "@core/hooks";
+import { useGameStore } from "@game/hooks";
 import { useQuestionStore, useQuizAdminStore } from "@admin/hooks";
 
 import { Header } from "@core/components";
@@ -13,6 +14,7 @@ const HomePage = (): JSX.Element => {
   const { loading, toggleLoading } = useLoading();
   const { questions, getAllQuestions } = useQuestionStore();
   const { getAllQuizzes } = useQuizAdminStore();
+  const { getAllGames } = useGameStore();
 
   const { searchValue, records, handleSearch } = useSearch<Question>(
     questions,
@@ -25,6 +27,10 @@ const HomePage = (): JSX.Element => {
 
   useEffect(() => {
     getAllQuizzes();
+  }, []);
+
+  useEffect(() => {
+    getAllGames();
   }, []);
 
   return (

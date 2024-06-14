@@ -17,6 +17,12 @@ import {
 
 const gameService = new GameService();
 
+const initializedGameLS: Game | null =
+  window.JSON.parse(
+    window.localStorage.getItem("initializedGame") ??
+      window.JSON.stringify(gameInitialValues)
+  ) ?? null;
+
 const createGameSlice: StateCreator<
   GameSlice & MatchSlice,
   [],
@@ -24,7 +30,7 @@ const createGameSlice: StateCreator<
   GameSlice
 > = (set, get) => ({
   games: [],
-  game: null,
+  game: initializedGameLS,
   setGames: (games): void => {
     set({ games });
   },
@@ -37,6 +43,7 @@ const createGameSlice: StateCreator<
         ...initialGameData,
         quizId,
       });
+      window.localStorage.setItem("initializedGame", JSON.stringify(newGame));
       set(({ games }) => ({
         games: [...games, newGame],
         game: newGame,
