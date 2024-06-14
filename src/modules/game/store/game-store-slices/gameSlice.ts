@@ -60,10 +60,7 @@ const createGameSlice: StateCreator<
         { matches: createMatches(quizQuestions) },
         "¡Ha ocurrido un error al iniciar el juego!"
       );
-      window.localStorage.setItem(
-        "initializedGame",
-        JSON.stringify(updatedGame)
-      );
+
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
         game: updatedGame,
@@ -87,6 +84,7 @@ const createGameSlice: StateCreator<
   getGame: async (quizId): Promise<void> => {
     try {
       const game: Game = await gameService.getGame(quizId);
+      window.localStorage.setItem("initializedGame", JSON.stringify(game));
       set({ game, currentMatch: game.matches[game.currentMatchIndex] });
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;

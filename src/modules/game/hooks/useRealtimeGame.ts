@@ -27,9 +27,14 @@ const useRealtimeGame = () => {
             return game;
           })
         );
+        window.localStorage.setItem(
+          "initializedGame",
+          JSON.stringify(e.record)
+        );
         return;
       }
       setGames([e.record, ...games]);
+      window.localStorage.setItem("initializedGame", JSON.stringify(e.record));
     });
 
     return () => {
