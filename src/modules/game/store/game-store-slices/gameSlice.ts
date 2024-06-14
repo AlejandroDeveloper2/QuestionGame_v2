@@ -62,11 +62,7 @@ const createGameSlice: StateCreator<
       );
       window.localStorage.setItem(
         "initializedGame",
-        JSON.stringify({
-          ...gameInitialValues,
-          id: updatedGame.id,
-          quizId: updatedGame.quizId,
-        })
+        JSON.stringify(updatedGame)
       );
       set(({ games }) => ({
         games: getUpdatedGamesState(games, updatedGame),
