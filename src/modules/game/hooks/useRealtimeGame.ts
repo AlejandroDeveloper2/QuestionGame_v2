@@ -7,6 +7,7 @@ import { Game } from "@game/types/data-types";
 import { useGameStore } from "@game/hooks";
 
 import { client } from "@config/pocketbase";
+import { saveGameToLocalStorage } from "@game/utils";
 
 const useRealtimeGame = () => {
   const urlParams = useParams();
@@ -27,14 +28,11 @@ const useRealtimeGame = () => {
             return game;
           })
         );
-        window.localStorage.setItem(
-          "initializedGame",
-          JSON.stringify(e.record)
-        );
+        saveGameToLocalStorage(e.record);
         return;
       }
       setGames([e.record, ...games]);
-      window.localStorage.setItem("initializedGame", JSON.stringify(e.record));
+      saveGameToLocalStorage(e.record);
     });
 
     return () => {
@@ -44,11 +42,11 @@ const useRealtimeGame = () => {
 
   useEffect(() => {
     getAllGames();
+    saveGameToLocalStorage(game);
   }, [game]);
 
   useEffect(() => {
     getGame(urlParam.quizId);
-    window.localStorage.setItem("initializedGame", JSON.stringify(game));
   }, [games]);
 };
 

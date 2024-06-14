@@ -94,3 +94,7 @@ export const getGameStatus = (
 
   return { ...currentGame };
 };
+
+export const saveGameToLocalStorage = (game: Game | null) => {
+  window.localStorage.setItem("initializedGame", JSON.stringify(game));
+};

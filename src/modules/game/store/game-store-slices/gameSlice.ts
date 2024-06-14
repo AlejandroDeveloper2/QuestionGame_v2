@@ -7,7 +7,7 @@ import { Loading, ServerResponse } from "@core/types/data-types";
 
 import { gameData, gameInitialValues, initialMatchData } from "@game/constants";
 
-import { createMatches } from "@game/utils";
+import { createMatches, saveGameToLocalStorage } from "@game/utils";
 import { GameService } from "@game/services";
 import {
   getUpdatedGamesState,
@@ -43,7 +43,7 @@ const createGameSlice: StateCreator<
         ...initialGameData,
         quizId,
       });
-      window.localStorage.setItem("initializedGame", JSON.stringify(newGame));
+      saveGameToLocalStorage(newGame);
       set(({ games }) => ({
         games: [...games, newGame],
         game: newGame,
