@@ -203,6 +203,7 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
   },
   restartQuiz: async (
     quizId,
+    gameId,
     questionsBank,
     toggleLoading: (loading: Loading) => void
   ): Promise<void> => {
@@ -226,6 +227,9 @@ const quizAdminStore = create<QuizAdminStore>((set) => ({
         },
         "¡Ha ocurrido un error al reiniciar el quiz!"
       );
+      await gameStore
+        .getState()
+        .resetGame(gameId, quizId, updatedQuiz.questions);
 
       set(({ quizzes }) => ({
         quizzes: getUpdatedQuizzesState(quizzes, updatedQuiz),

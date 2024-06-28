@@ -79,6 +79,7 @@ interface QuizAdminStore {
   ) => Promise<void>;
   restartQuiz: (
     quizId: string,
+    gameId: string,
     questionsBank: Question[],
     toggleLoading: (loadingStatus: Loading) => void
   ) => Promise<void>;

@@ -39,7 +39,7 @@ const QuizControls = (): JSX.Element => {
 
   const { questions } = useQuestionStore();
   const { quiz, finishQuiz, restartQuiz } = useQuizAdminStore();
-  const { game, currentMatch, clearGame, resetGame } = useGameStore();
+  const { game, currentMatch, clearGame } = useGameStore();
 
   const [Icon, value] = getStatusQuizBadge(quiz ? quiz.isQuizCompleted : false);
 
@@ -95,8 +95,11 @@ const QuizControls = (): JSX.Element => {
             loading={loadingRebootQuiz}
             onClick={() => {
               if (quiz && game)
-                restartQuiz(quiz.id, questions, toggleLoadingRebootQuiz).then(
-                  () => resetGame(game.id, quiz.id, quiz.questions)
+                restartQuiz(
+                  quiz.id,
+                  game.id,
+                  questions,
+                  toggleLoadingRebootQuiz
                 );
             }}
           />
