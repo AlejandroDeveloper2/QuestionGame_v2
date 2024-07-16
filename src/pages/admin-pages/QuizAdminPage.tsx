@@ -1,5 +1,8 @@
-import { useScreenSize } from "@core/hooks";
-import { useQuizAdminStore } from "@admin/hooks";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect } from "react";
+
+import { useLoading, useScreenSize } from "@core/hooks";
+import { useQuestionStore, useQuizAdminStore } from "@admin/hooks";
 
 import { Empty, Header } from "@core/components";
 import { QuizList } from "@admin/components";
@@ -10,8 +13,14 @@ import { TitleContainer } from "@core/styles/GlobalStyles.style";
 
 const QuizAdminPage = (): JSX.Element => {
   const size = useScreenSize();
+  const { toggleLoading } = useLoading();
 
   const { quizzes } = useQuizAdminStore();
+  const { getAllQuestions } = useQuestionStore();
+
+  useEffect(() => {
+    getAllQuestions(toggleLoading);
+  }, []);
 
   return (
     <>
