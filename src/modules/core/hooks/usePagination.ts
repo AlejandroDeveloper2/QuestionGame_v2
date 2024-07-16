@@ -9,10 +9,9 @@ const usePagination = <T>(paginationData: Pagination<T>) => {
   const [lastShownRecord, setLastShownRecord] = useState<number>(recordsToList);
 
   const next = (): void => {
-    if (currentPage >= 0 && currentPage < paginationData.totalPages - 1) {
+    if (currentPage >= 0 && currentPage < paginationData.totalPages) {
       window.scrollTo({ behavior: "smooth", top: 0 });
       setCurrentPage((currentPage) => currentPage + 1);
-      console.log(currentPage);
       if (currentPage >= 0) {
         setFirstShownRecord(
           (firstShownRecord) => firstShownRecord + recordsToList
@@ -24,8 +23,8 @@ const usePagination = <T>(paginationData: Pagination<T>) => {
   };
 
   const back = (): void => {
-    window.scrollTo({ behavior: "smooth", top: 0 });
-    if (currentPage >= 1 && currentPage <= paginationData.totalPages - 1) {
+    if (currentPage > 1 && currentPage <= paginationData.totalPages) {
+      window.scrollTo({ behavior: "smooth", top: 0 });
       setCurrentPage((currentPage) => currentPage - 1);
       if (currentPage === 0) {
         setFirstShownRecord(1);

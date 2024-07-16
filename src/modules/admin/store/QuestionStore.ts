@@ -10,7 +10,7 @@ import { ListResult } from "pocketbase";
 
 const questionService = new QuestionService();
 
-const questionStore = create<QuestionStore>((set) => ({
+const questionStore = create<QuestionStore>((set, get) => ({
   questions: [],
   question: null,
   pagination: {
@@ -100,6 +100,7 @@ const questionStore = create<QuestionStore>((set) => ({
     try {
       const newQuestion: Question = await questionService.addQuestion(question);
       set(({ questions }) => ({ questions: [...questions, newQuestion] }));
+      await get().getQuestions(toggleLoading, get().pagination.page, 12);
       toast.success("¡Pregunta añadida correctamente!");
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
@@ -155,6 +156,7 @@ const questionStore = create<QuestionStore>((set) => ({
       set(({ questions }) => ({
         questions: questions.filter((question) => question.id !== questionId),
       }));
+      await get().getQuestions(toggleLoading, get().pagination.page, 12);
       toast.success("¡Pregunta eliminada correctamente!");
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;

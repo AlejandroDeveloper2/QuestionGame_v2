@@ -2,6 +2,7 @@ import { Category, CategoryFormData } from "@admin/types/data-types";
 import { ServerResponse } from "@core/types/data-types";
 
 import { client } from "@config/pocketbase";
+import { ListResult } from "pocketbase";
 
 class CategoryService {
   constructor() {}
@@ -11,6 +12,26 @@ class CategoryService {
       result = await client
         .collection<Category[]>("categories")
         .getFullList({ requestKey: null });
+    } catch (e: unknown) {
+      const parsedError = e as ServerResponse;
+      throw new Error(
+        (parsedError.message =
+          "¡Ha ocurrido un error al obtener las categorias!")
+      );
+    }
+    return result;
+  }
+
+  public async getCategories(
+    page?: number,
+    limit?: number
+  ): Promise<ListResult<Category>> {
+    let result: ListResult<Category>;
+
+    try {
+      result = await client
+        .collection<Category>("categories")
+        .getList(page ?? undefined, limit ?? undefined);
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(

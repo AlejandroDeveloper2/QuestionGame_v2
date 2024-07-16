@@ -40,8 +40,14 @@ interface QuestionStore {
 interface CategoryStore {
   categories: Category[];
   category: Category | null;
+  pagination: Pagination<Category>;
   getAllCategories: (
     toggleLoading: (loadingStatus: Loading) => void
+  ) => Promise<void>;
+  getCategories: (
+    toggleLoading: (loadingStatus: Loading) => void,
+    page?: number,
+    limit?: number
   ) => Promise<void>;
   getCategory: (categoryId: string) => Promise<void>;
   addCategory: (
