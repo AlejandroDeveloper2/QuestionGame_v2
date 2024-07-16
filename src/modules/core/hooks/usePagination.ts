@@ -4,9 +4,7 @@ import { Pagination } from "@core/types/data-types";
 
 const usePagination = <T>(paginationData: Pagination<T>) => {
   const [recordsToList] = useState<number>(12);
-  const [currentPage, setCurrentPage] = useState<number>(
-    paginationData.page - 1
-  );
+  const [currentPage, setCurrentPage] = useState<number>(paginationData.page);
   const [firstShownRecord, setFirstShownRecord] = useState<number>(1);
   const [lastShownRecord, setLastShownRecord] = useState<number>(recordsToList);
 
@@ -14,6 +12,7 @@ const usePagination = <T>(paginationData: Pagination<T>) => {
     if (currentPage >= 0 && currentPage < paginationData.totalPages - 1) {
       window.scrollTo({ behavior: "smooth", top: 0 });
       setCurrentPage((currentPage) => currentPage + 1);
+      console.log(currentPage);
       if (currentPage >= 0) {
         setFirstShownRecord(
           (firstShownRecord) => firstShownRecord + recordsToList
