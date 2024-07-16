@@ -4,7 +4,7 @@ import { Pagination } from "@core/types/data-types";
 
 const usePagination = <T>(paginationData: Pagination<T>) => {
   const [recordsToList] = useState<number>(12);
-  const [currentPage, setCurrentPage] = useState<number>(paginationData.page);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [firstShownRecord, setFirstShownRecord] = useState<number>(1);
   const [lastShownRecord, setLastShownRecord] = useState<number>(recordsToList);
 
