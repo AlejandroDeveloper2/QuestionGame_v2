@@ -26,8 +26,8 @@ const useSearch = <T>(recordList: T[], filterKey: keyof T) => {
   }, [searchValue, recordList, filterKey]);
 
   return {
-    searchValue,
     records,
+    searchValue,
     handleSearch,
   };
 };

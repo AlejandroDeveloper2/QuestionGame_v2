@@ -6,12 +6,19 @@ import { Loading, ServerResponse } from "@core/types/data-types";
 import { Question, QuestionFormData } from "@admin/types/data-types";
 
 import { QuestionService } from "@admin/services";
+import { ListResult } from "pocketbase";
 
 const questionService = new QuestionService();
 
 const questionStore = create<QuestionStore>((set) => ({
   questions: [],
   question: null,
+  pagination: {
+    page: 0,
+    perPage: 0,
+    totalItems: 0,
+    totalPages: 0,
+  },
   getAllQuestions: async (
     toggleLoading: (loadingStatus: Loading) => void
   ): Promise<void> => {
@@ -22,6 +29,47 @@ const questionStore = create<QuestionStore>((set) => ({
     try {
       const questions: Question[] = await questionService.getAllQuestions();
       set({ questions });
+    } catch (_e: unknown) {
+      const parsedError = _e as ServerResponse;
+      toast.error(parsedError.message);
+    } finally {
+      toggleLoading({
+        isLoading: false,
+        message: "",
+      });
+    }
+  },
+  getQuestions: async (
+    toggleLoading: (loadingStatus: Loading) => void,
+    page,
+    limit,
+    filter
+  ): Promise<void> => {
+    toggleLoading({
+      isLoading: true,
+      message: "Cargando preguntas...",
+    });
+    try {
+      const {
+        items,
+        page: currentPage,
+        perPage,
+        totalItems,
+        totalPages,
+      }: ListResult<Question> = await questionService.getQuestions(
+        page,
+        limit,
+        filter
+      );
+      set({
+        questions: items,
+        pagination: {
+          page: currentPage,
+          perPage,
+          totalItems,
+          totalPages,
+        },
+      });
     } catch (_e: unknown) {
       const parsedError = _e as ServerResponse;
       toast.error(parsedError.message);

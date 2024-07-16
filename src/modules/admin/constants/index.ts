@@ -13,3 +13,4 @@ export {
   initialQuizErrors,
 } from "./quiz-form-values";
 export { initialAwardValues, initialAwardErrors } from "./award-form-values";
+export { default as categoryTapsData } from "./category-taps-data";

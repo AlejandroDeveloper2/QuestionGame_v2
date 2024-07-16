@@ -9,3 +9,5 @@ export { default as useSearch } from "./useSearch";
 export { default as useScreenSize } from "./useScreenSize";
 export { default as useDialog } from "./useDialog";
 export { default as useMultiselect } from "./useMultiselect";
+export { default as useTapNav } from "./useTapNav";
+export { default as usePagination } from "./usePagination";

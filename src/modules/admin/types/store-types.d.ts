@@ -6,13 +6,20 @@ import {
   Quiz,
   QuizFormData,
 } from "./data-types";
-import { Loading } from "@core/types/data-types";
+import { Filter, Loading, Pagination } from "@core/types/data-types";
 
 interface QuestionStore {
   questions: Question[];
   question: Question | null;
+  pagination: Pagination<Question>;
   getAllQuestions: (
     toggleLoading: (loadingStatus: Loading) => void
+  ) => Promise<void>;
+  getQuestions: (
+    toggleLoading: (loadingStatus: Loading) => void,
+    page?: number,
+    limit?: number,
+    filter?: Filter<Question>
   ) => Promise<void>;
   getQuestion: (questionId: string) => Promise<void>;
   addQuestion: (

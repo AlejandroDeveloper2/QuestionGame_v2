@@ -1,6 +1,6 @@
 import { Loading } from "@core/types/data-types";
 import { IconType } from "@core/types/component-types";
-import { Question, Category, Quiz, Answer } from "./data-types";
+import { Question, Category, Quiz, Answer, Difficulty } from "./data-types";
 
 type FormMode = "edit" | "add";
 
@@ -28,6 +28,8 @@ interface CategoryHeaderProps extends HomeHeaderProps {}
 interface QuestionListProps {
   records: Question[];
   loading: Loading;
+  selectedTap: Difficulty;
+  toggleTap: (chosenTap: Difficulty) => void;
 }
 
 interface CategoryListProps extends Pick<QuestionListProps, "loading"> {

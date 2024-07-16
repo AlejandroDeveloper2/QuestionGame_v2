@@ -2,19 +2,25 @@ import { Clock, Coins, Hexagon, Star } from "iconoir-react";
 
 import { QuestionListProps } from "@admin/types/component-types";
 import { Difficulty } from "@admin/types/data-types";
+import { categoryTapsData } from "@admin/constants";
 
 import { useQuestionStore } from "@admin/hooks";
 import { useDialog, useLoading, useModal } from "@core/hooks";
 
-import { Dialog, Empty, Modal, Spinner } from "@core/components";
+import { Dialog, Empty, Modal, Spinner, TapNav } from "@core/components";
 import { CardList, QuestionForm } from "@admin/components";
 
-const QuestionList = ({ records, loading }: QuestionListProps): JSX.Element => {
+const QuestionList = ({
+  records,
+  loading,
+  selectedTap,
+  toggleTap,
+}: QuestionListProps): JSX.Element => {
   const { isModalVisible, openModal, closeModal } = useModal();
   const { toggleDialog, isDialogVisible, elementId } = useDialog();
   const { toggleLoading } = useLoading();
 
-  const { getQuestion, removeQuestion } = useQuestionStore();
+  const { getQuestion, removeQuestion, pagination } = useQuestionStore();
 
   return (
     <>
@@ -35,8 +41,20 @@ const QuestionList = ({ records, loading }: QuestionListProps): JSX.Element => {
         toggleDialog={() => toggleDialog("")}
       />
       <h2 style={{ marginTop: "var(--spacing-xl)" }}>
-        Banco de preguntas ({records.length})
+        Banco de preguntas ({pagination.totalItems})
       </h2>
+      <TapNav>
+        {categoryTapsData.map((tap, index) => (
+          <TapNav.Tap<Difficulty>
+            key={index}
+            tapData={tap}
+            selectedTap={selectedTap}
+            toggleTap={() => {
+              toggleTap(tap.tapId);
+            }}
+          />
+        ))}
+      </TapNav>
       {loading.isLoading ? (
         <Spinner
           color="var(--white)"

@@ -22,3 +22,5 @@ export { default as Badge } from "./badge/Badge";
 export { default as BadgeWithLabel } from "./badge/BadgeWithLabel";
 export { default as Dialog } from "./dialog/Dialog";
 export { default as NoQuizFound } from "./no-quiz-found/NoQuizFound";
+export { default as TapNav } from "./tap-nav/TapNav";
+export { default as Pagination } from "./pagination/Pagination";

@@ -1,3 +1,7 @@
+import { ListResult } from "pocketbase";
+
+import { IconType } from "./component-types";
+
 type Size = { sm: number; md: number; lg: number };
 type FieldErrorType = {
   message: string;
@@ -5,6 +9,7 @@ type FieldErrorType = {
 };
 type ScreenType = "desktop" | "tablet" | "mobile";
 type FlexDirection = "row" | "column";
+type ListFilters<T> = keyof T;
 
 interface Loading {
   isLoading: boolean;
@@ -47,6 +52,19 @@ interface ServerResponse {
   code: number;
 }
 
+interface Tap<T> {
+  label: string;
+  Icon: IconType;
+  tapId: T;
+}
+
+interface Pagination<T> extends Omit<ListResult<T>, "items"> {}
+
+interface Filter<T> {
+  filterKey: ListFilters<T>;
+  filterValue: string | number;
+}
+
 export type {
   ScreenType,
   FieldErrorType,
@@ -61,4 +79,8 @@ export type {
   HeaderStyle,
   LoadingWindowStyle,
   ServerResponse,
+  Tap,
+  Pagination,
+  ListFilters,
+  Filter,
 };

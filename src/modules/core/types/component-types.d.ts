@@ -1,4 +1,5 @@
-import { Loading, Size, FieldSetStyle, HeaderStyle } from "./data-types";
+import { ReactNode } from "react";
+import { Loading, Size, FieldSetStyle, HeaderStyle, Tap } from "./data-types";
 
 type ButtonVariantType =
   | "primary"
@@ -189,6 +190,23 @@ interface NoQuizFoundProps {
   buttonLabel: string;
 }
 
+interface TapProps<T> {
+  tapData: Tap<T>;
+  selectedTap: T;
+  toggleTap: () => void;
+}
+
+interface TapNavProps {
+  children: ReactNode | ReactNode[];
+}
+interface PaginationProps {
+  firstShownRecord: number;
+  lastShownRecord: number;
+  totalItems: number;
+  back: () => void;
+  next: () => void;
+}
+
 export type {
   ButtonVariantType,
   ButtonType,
@@ -223,4 +241,7 @@ export type {
   BadgeWithLabelProps,
   DialogProps,
   NoQuizFoundProps,
+  TapProps,
+  TapNavProps,
+  PaginationProps,
 };

@@ -1,5 +1,7 @@
+import { ListResult } from "pocketbase";
+
 import { Question, QuestionFormData } from "@admin/types/data-types";
-import { ServerResponse } from "@core/types/data-types";
+import { Filter, ServerResponse } from "@core/types/data-types";
 
 import { client } from "@config/pocketbase";
 
@@ -9,9 +11,36 @@ class QuestionService {
   public async getAllQuestions(): Promise<Question[]> {
     let result: Question[];
     try {
-      result = await client
-        .collection<Question[]>("questions")
-        .getFullList({ requestKey: null });
+      result = await client.collection<Question[]>("questions").getFullList({
+        requestKey: null,
+      });
+    } catch (e: unknown) {
+      const parsedError = e as ServerResponse;
+      throw new Error(
+        (parsedError.message =
+          "¡Ha ocurrido un error al obtener el banco de preguntas!")
+      );
+    }
+    return result;
+  }
+
+  public async getQuestions(
+    page?: number,
+    limit?: number,
+    filter?: Filter<Question>
+  ): Promise<ListResult<Question>> {
+    let result: ListResult<Question>;
+
+    try {
+      result = await client.collection<Question>("questions").getList(
+        page ?? undefined,
+        limit ?? undefined,
+        filter
+          ? {
+              filter: `${filter.filterKey} = "${filter.filterValue}"`,
+            }
+          : undefined
+      );
     } catch (e: unknown) {
       const parsedError = e as ServerResponse;
       throw new Error(

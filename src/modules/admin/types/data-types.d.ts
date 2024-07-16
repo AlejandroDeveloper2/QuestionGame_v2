@@ -1,4 +1,4 @@
-type Difficulty = "Basico" | "Intermedio" | "Experto";
+type Difficulty = "Basico" | "Intermedio" | "Experto" | "Todas";
 
 interface Answer {
   answerText: string;

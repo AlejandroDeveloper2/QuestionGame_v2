@@ -1,18 +1,18 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect } from "react";
 
-import { Question } from "@admin/types/data-types";
+import { Difficulty, Question } from "@admin/types/data-types";
 
-import { useLoading, useSearch } from "@core/hooks";
+import { useLoading, usePagination, useSearch, useTapNav } from "@core/hooks";
 import { useGameStore } from "@game/hooks";
 import { useQuestionStore, useQuizAdminStore } from "@admin/hooks";
 
-import { Header } from "@core/components";
+import { Header, Pagination } from "@core/components";
 import { HomeHeader, QuestionList } from "@admin/components";
 
 const HomePage = (): JSX.Element => {
   const { loading, toggleLoading } = useLoading();
-  const { questions, getAllQuestions } = useQuestionStore();
+  const { questions, pagination, getQuestions } = useQuestionStore();
   const { getAllQuizzes } = useQuizAdminStore();
   const { getAllGames } = useGameStore();
 
@@ -20,10 +20,33 @@ const HomePage = (): JSX.Element => {
     questions,
     "name"
   );
+  const { selectedTap, toggleTap } = useTapNav<Difficulty>("Todas");
+  const {
+    recordsToList,
+    currentPage,
+    firstShownRecord,
+    lastShownRecord,
+    next,
+    back,
+  } = usePagination<Question>(pagination);
 
   useEffect(() => {
-    if (questions.length === 0) getAllQuestions(toggleLoading);
-  }, []);
+    if (searchValue === "") {
+      getQuestions(
+        toggleLoading,
+        currentPage,
+        recordsToList,
+        selectedTap !== "Todas"
+          ? {
+              filterKey: "difficulty",
+              filterValue: selectedTap,
+            }
+          : undefined
+      );
+    } else {
+      getQuestions(toggleLoading, currentPage, recordsToList);
+    }
+  }, [selectedTap, currentPage, searchValue]);
 
   useEffect(() => {
     getAllQuizzes();
@@ -43,7 +66,19 @@ const HomePage = (): JSX.Element => {
       >
         <HomeHeader searchValue={searchValue} handleSearch={handleSearch} />
       </Header>
-      <QuestionList records={records} loading={loading} />
+      <QuestionList
+        records={records}
+        loading={loading}
+        selectedTap={selectedTap}
+        toggleTap={toggleTap}
+      />
+      <Pagination
+        firstShownRecord={firstShownRecord}
+        lastShownRecord={lastShownRecord}
+        totalItems={pagination.totalItems}
+        back={back}
+        next={next}
+      />
     </>
   );
 };
